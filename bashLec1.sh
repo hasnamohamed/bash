@@ -1,69 +1,6 @@
 #!/usr/bin/bash
 export LC_COLLATE=C
 shopt -s extglob
-#sed -n '/lp/p' /etc/passwd
-#sed -n '3!p' /etc/passwd
-#3---
-#sed -n '/lp/!p' /etc/passwd
-#5----------
-#awk -F':' '
-#BEGIN {}
-#{print $5;}
-#END{print "END";}' /etc/passwd
-
-#awk -F':' '
-#BEGIN {}
-#print $5;
-#}
-#END{print "END";}' /etc/passwd
-
-#awk -F':' '
-#BEGIN {}
-#{
-#if($3>500){print $3;
-#print $5;
-#}}
-#END{print "END";}' /etc/passwd
-
-
-#awk -F':' '
-#BEGIN {}
-#{if($3==500){print $3;
-#print $5;
-#}}
-#END{print "END";}' /etc/passwd
-
-#awk -F':' '
-#BEGIN {}
-#{if(NR>5&&NR<15){print $0;}}
-#END{print "END";}' /etc/passwd
-#6-----------
-#awk -F':' '
-#BEGIN {
-#line=""
-#max=0}
-#{if($3>max){max=$3
-#line=$0
-#}}
-#END{print line;}' /etc/passwd
-
-
-#awk -F':' '
-#BEGIN {
-#count=0}
-#{count=count+$3
-#}
-#END{print count;}' /etc/passwd
-
-#awk -F':' '
-#BEGIN { getline m_gid; sum_uid=0 }
-#{
-#if($4==m_gid)
- # sum_uid += $3
-  #}
-#END { printf "Sum of UID = %d", sum_uid }' /etc/#passwd
-#alias c="cd /DB"
-
 rej='^[A-Z | a-z][A-Za-z0-9]+$'
 if [ -d "DB" ];then
       cd ./DB
@@ -172,7 +109,6 @@ do
       esac
     done
 done
-
 
 
 
