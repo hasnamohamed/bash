@@ -92,14 +92,35 @@ do
                           if [ -f $tb_name ];then
                             data=()
                             declare -i index=0
+                             declare -i prim=0
                              while ((index < `head -n1 ./$tb_name | grep -o ":" | wc -l`))
                              do
                                read -p "please insert data of col ${index} " col_value
+                              if [ $index == 0 ]
+                              then
+                                ((prim=$col_value))
+                              fi
                                dt=$col_value":"
                                 data+=$dt
                                 ((index=$index+1))
                              done
+                              my_ar=()
+                             declare -i indexxx=3
+                             declare -i flag=0
+                             IFS=$'\n' read -r -d '' -a my_ar < <( sed -n '3,$p' $tb_name | cut -d : -f1 && printf '\0' )
+                            for i in "${my_ar[@]}"
+                             do
+                               if [[ "${i}" == "${prim}" ]]
+                               then
+                                 ((flag=1))
+                               fi
+                             done
+                             if [ $flag == 1 ]
+                             then
+                               echo "Your primary key is already exist please enter another one"
+                              else
                              echo ${data[0]} >> ./$tb_name
+                             fi
                           else
                             echo "you havn't a table with this name"
                           fi
@@ -222,10 +243,8 @@ do
                              else
                               for (( x=0; x < counter2; x++ ))
                                  do
-                                  #declare -i line=${index2[$x]}+2
-                                 # echo $line
                                    sed -i "${index2[$x]} s/$old_data/$data/" $tb_name
-                             done
+                              done
                             fi
                             fi
                             else
