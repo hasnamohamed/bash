@@ -1,6 +1,8 @@
 #!/usr/bin/bash
 export LC_COLLATE=C
 shopt -s extglob
+
+
 rej='^[A-Z | a-z][A-Za-z0-9]+$'
 if [ -d "DB" ];then
       cd ./DB
@@ -8,7 +10,7 @@ if [ -d "DB" ];then
   else
     mkdir ./DB
     cd ./DB
-    echo "Your are connected to the engine now"
+    echo "Your are connected weweqeqewto the engine now"
 fi
 while true
 do
@@ -204,26 +206,26 @@ do
                            read  -p "Enter your new data " data
                            index2=()
                            declare -i ind=0
+                           declare -i counter2=0
                             for i in "${ary[@]}"
                              do
                                if [[ "${ary[ind]}" == "${old_data}" ]]
                                  then
                                    ((indexx=$ind+1))
                                   index2+=$indexx
-                                  index2+=' '
+                                  ((counter2=$counter2+1))
                                fi
                              ((ind=$ind+1))
                              done
                              if [ $indexx == 0 ]; then
                                  echo "please write a correct data"
                              else
-                             declare -i indx=0
-                            for i in  "${index2[@]}"
-                             do
-                           # sed -i  "${index2[indx]}"',$p' $tb_name | cut -d : -f$index $tb_name
-                           #sed -i "${index2[$indx]s/$old_data/$data/}" $tb_name
-                            ((indx=$indx+1))
-                            done
+                              for (( x=0; x < counter2; x++ ))
+                                 do
+                                  #declare -i line=${index2[$x]}+2
+                                 # echo $line
+                                   sed -i "${index2[$x]} s/$old_data/$data/" $tb_name
+                             done
                             fi
                             fi
                             else
