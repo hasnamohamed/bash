@@ -1,8 +1,6 @@
 #!/usr/bin/bash
 export LC_COLLATE=C
 shopt -s extglob
-
-
 rej='^[A-Z | a-z][A-Za-z0-9]+$'
 if [ -d "DB" ];then
       cd ./DB
