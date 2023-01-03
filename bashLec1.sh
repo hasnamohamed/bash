@@ -10,7 +10,7 @@ if [ -d "DB" ];then
   else
     mkdir ./DB
     cd ./DB
-    echo "Your are connected weweqeqewto the engine now"
+    echo "Your are connected to the engine now"
 fi
 while true
 do
@@ -152,7 +152,11 @@ do
                                            ((index = $in))
                                         fi
                                       done
+                                      if [ $index == 0 ]; then
+                                          echo "please insert correct column name"
+                                     else
                                      cut -d : -f$index $tb_name
+                                      fi
                                     ;;
                                     "Exit")
                                     break
@@ -175,8 +179,58 @@ do
                           fi
                           ;;
                         "Update Table")
-                           read -p "Enter the Primary key " prim
-                           read  -p "Enter your new data" data
+                           read -p "Enter the table name " tb_name
+                           if [ -f $tb_name ];then
+                            line=$(head -n 1 $tb_name)
+                            IFS=':' read -r -a ar <<< "$line"
+                            read -p "Enter the col name " col_name
+                                      declare -i index=0
+                                      declare -i in=0
+                                      for i in "${ar[@]}"
+                                      do
+                                        if [[ "${ar[in]}" == "${col_name}" ]]
+                                          then
+                                           ((index = $in+1))
+                                        fi
+                                      ((in=$in+1))
+                                      done
+                               if [ $index == 0 ] ; then
+                                 echo "Please enter a correct col name"
+                                 else
+                                      d=()
+                             d=$(cut -d : -f$index $tb_name)
+                             ary=()
+                              declare -i indexx=0
+                              readarray -t ary <<<"$d"
+                           read -p "Enter the old data " old_data
+                           read  -p "Enter your new data " data
+                           index2=()
+                           declare -i ind=0
+                            for i in "${ary[@]}"
+                             do
+                               if [[ "${ary[ind]}" == "${old_data}" ]]
+                                 then
+                                   ((indexx=$ind+1))
+                                  index2+=$indexx
+                                  index2+=' '
+                               fi
+                             ((ind=$ind+1))
+                             done
+                             if [ $indexx == 0 ]; then
+                                 echo "please write a correct data"
+                             else
+                             declare -i indx=0
+                            for i in  "${index2[@]}"
+                             do
+                           # sed -i  "${index2[indx]}"',$p' $tb_name | cut -d : -f$index $tb_name
+                           #sed -i "${index2[$indx]s/$old_data/$data/}" $tb_name
+                            ((indx=$indx+1))
+                            done
+                            fi
+                            fi
+                            else
+                              echo "you havn't a table with this name"
+                            fi
                           ;;
                         "List Tables")
                           ls -a
